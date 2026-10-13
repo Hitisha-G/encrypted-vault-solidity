@@ -29,6 +29,10 @@ docs/                       # design notes and threat model
 - Solhint and `forge fmt` checks in CI
 - Slither static analysis on every change
 
+## Design
+
+See [docs/design.md](docs/design.md) for the contract surface, invariants, and threat model.
+
 ## Status
 
 Early scaffold. Contracts and tests land incrementally.
