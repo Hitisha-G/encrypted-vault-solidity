@@ -26,9 +26,11 @@ docs/                       # design notes and threat model
 ## Tooling (target)
 
 - [Foundry](https://book.getfoundry.sh/) for build, test, and fuzzing
-- CI runs `forge fmt --check`, `forge build --sizes`, `forge test`, and a gas report (Foundry build cache enabled)
+- `make ci-local` mirrors CI: `forge fmt --check`, `forge build --sizes`, and `forge test --gas-report`
+- CI runs the same checks with a Foundry build cache enabled
 - Solhint and `forge fmt` checks in CI
 - Slither static analysis on every change
+- Copy `.env.example` to `.env` for local RPC and deploy keys (`.env` is gitignored)
 
 ## Design
 
