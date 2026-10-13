@@ -14,6 +14,9 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  FOUNDRY_PROFILE: ci
+
 jobs:
   foundry:
     runs-on: ubuntu-latest
@@ -26,15 +29,30 @@ jobs:
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
 
       - name: Show forge version
         run: forge --version
+
+      - name: Cache Foundry build
+        uses: actions/cache@v4
+        with:
+          path: |
+            cache
+            out
+          key: foundry-${{ runner.os }}-${{ hashFiles('**/foundry.toml', '**/lib/**', '**/src/**', '**/test/**') }}
+          restore-keys: |
+            foundry-${{ runner.os }}-
 
       - name: Check formatting
         run: forge fmt --check
 
       - name: Build
-        run: forge build
+        run: forge build --sizes
 
       - name: Test
         run: forge test -vvv
+
+      - name: Gas report
+        run: forge test --gas-report

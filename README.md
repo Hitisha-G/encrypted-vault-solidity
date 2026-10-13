@@ -26,7 +26,7 @@ docs/                       # design notes and threat model
 ## Tooling (target)
 
 - [Foundry](https://book.getfoundry.sh/) for build, test, and fuzzing
-- CI runs `forge fmt --check`, `forge build`, and `forge test`
+- CI runs `forge fmt --check`, `forge build --sizes`, `forge test`, and a gas report (Foundry build cache enabled)
 - Solhint and `forge fmt` checks in CI
 - Slither static analysis on every change
 
