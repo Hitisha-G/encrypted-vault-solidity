@@ -20,4 +20,4 @@ number_underscore = "thousands"
 [profile.ci]
 fuzz = { runs = 256 }
 invariant = { runs = 64 }
-deny = ["warnings"]
+deny = "warnings"
