@@ -51,8 +51,5 @@ jobs:
       - name: Build
         run: forge build --sizes
 
-      - name: Test
-        run: forge test -vvv
-
-      - name: Gas report
-        run: forge test --gas-report
+      - name: Test with gas report
+        run: forge test -vvv --gas-report
