@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
           submodules: recursive
@@ -54,7 +54,7 @@ jobs:
         run: forge --version
 
       - name: Cache Foundry build
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             cache
