@@ -18,7 +18,25 @@ env:
   FOUNDRY_PROFILE: ci
 
 jobs:
+  workflow-lint:
+    name: lint workflows
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install actionlint
+        run: |
+          bash <(curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/v1.7.7/scripts/download-actionlint.bash) 1.7.7
+          echo "$PWD" >> "$GITHUB_PATH"
+
+      - name: Run actionlint
+        run: actionlint -color
+
   foundry:
+    needs: workflow-lint
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

@@ -1,0 +1,17 @@
+version: 2
+updates:
+  # Keep pinned GitHub Actions (checkout, cache, foundry-toolchain) current.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Kolkata
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns:
+          - "*"

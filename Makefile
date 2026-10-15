@@ -1,6 +1,6 @@
 # Local shortcuts mirroring .github/workflows/ci.yml.
 
-.PHONY: help fmt fmt-check build test gas sizes clean ci-local
+.PHONY: help fmt fmt-check build test gas sizes clean lint-ci ci-local
 
 help: ## List available targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  %-12s %s\n", $$1, $$2}'
@@ -26,4 +26,7 @@ gas: ## Run tests with a gas report (same as CI)
 clean: ## Remove forge build artifacts
 	forge clean
 
-ci-local: fmt-check sizes gas ## Reproduce the CI job locally
+lint-ci: ## Lint GitHub Actions workflows with actionlint (same as CI)
+	actionlint
+
+ci-local: lint-ci fmt-check sizes gas ## Reproduce the CI jobs locally
