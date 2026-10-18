@@ -27,7 +27,7 @@ docs/                       # design notes and threat model
 
 - [Foundry](https://book.getfoundry.sh/) for build, test, and fuzzing
 - `make ci-local` mirrors CI: `actionlint`, `forge fmt --check`, `forge build --sizes`, and `forge test --gas-report`
-- CI runs the same checks with a Foundry build cache enabled, after an actionlint pass over the workflows
+- CI steps call the same Makefile targets (`make lint-ci`, `make fmt-check`, `make sizes`, `make gas VERBOSITY=-vvv`), so local runs and CI cannot drift; CI adds a Foundry build cache
 - Dependabot opens a weekly grouped PR to keep pinned GitHub Actions current
 - Docs-only changes (`*.md`, `docs/`, `LICENSE`) skip CI; a weekly scheduled run (Mondays 03:30 UTC) catches Foundry stable releases that change `fmt` or build behaviour
 - Solhint and `forge fmt` checks in CI

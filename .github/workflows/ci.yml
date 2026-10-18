@@ -45,7 +45,7 @@ jobs:
           echo "$PWD" >> "$GITHUB_PATH"
 
       - name: Run actionlint
-        run: actionlint -color
+        run: make lint-ci
 
   foundry:
     needs: workflow-lint
@@ -75,11 +75,13 @@ jobs:
           restore-keys: |
             foundry-${{ runner.os }}-
 
+      # Steps call the Makefile targets so `make ci-local` runs exactly
+      # what CI runs.
       - name: Check formatting
-        run: forge fmt --check
+        run: make fmt-check
 
       - name: Build
-        run: forge build --sizes
+        run: make sizes
 
       - name: Test with gas report
-        run: forge test -vvv --gas-report
+        run: make gas VERBOSITY=-vvv
