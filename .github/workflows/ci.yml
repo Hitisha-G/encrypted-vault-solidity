@@ -3,8 +3,20 @@ name: ci
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "LICENSE"
   pull_request:
     branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "LICENSE"
+  # Weekly run so a new Foundry stable release that breaks fmt or build
+  # shows up here instead of on the next unrelated change.
+  schedule:
+    - cron: "30 3 * * 1"
   workflow_dispatch:
 
 concurrency:

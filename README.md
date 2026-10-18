@@ -29,6 +29,7 @@ docs/                       # design notes and threat model
 - `make ci-local` mirrors CI: `actionlint`, `forge fmt --check`, `forge build --sizes`, and `forge test --gas-report`
 - CI runs the same checks with a Foundry build cache enabled, after an actionlint pass over the workflows
 - Dependabot opens a weekly grouped PR to keep pinned GitHub Actions current
+- Docs-only changes (`*.md`, `docs/`, `LICENSE`) skip CI; a weekly scheduled run (Mondays 03:30 UTC) catches Foundry stable releases that change `fmt` or build behaviour
 - Solhint and `forge fmt` checks in CI
 - Slither static analysis on every change
 - Copy `.env.example` to `.env` for local RPC and deploy keys (`.env` is gitignored)
