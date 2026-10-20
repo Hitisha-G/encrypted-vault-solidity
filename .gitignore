@@ -20,3 +20,7 @@ coverage/
 .vscode/
 .idea/
 .DS_Store
+
+# CI step output captured for the job summary
+sizes.txt
+gas-report.txt

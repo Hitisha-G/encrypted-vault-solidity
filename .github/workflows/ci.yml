@@ -80,8 +80,28 @@ jobs:
       - name: Check formatting
         run: make fmt-check
 
+      # `shell: bash` turns on pipefail, so tee never hides a forge failure.
       - name: Build
-        run: make sizes
+        shell: bash
+        run: make sizes | tee sizes.txt
 
       - name: Test with gas report
-        run: make gas VERBOSITY=-vvv
+        shell: bash
+        run: make gas VERBOSITY=-vvv | tee gas-report.txt
+
+      # Surface sizes and gas on the run page so reviewers don't have to
+      # dig through raw logs; runs even when tests fail.
+      - name: Publish job summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Contract sizes"
+            echo '```'
+            cat sizes.txt 2>/dev/null || echo "build did not run"
+            echo '```'
+            echo "## Gas report"
+            echo '```'
+            cat gas-report.txt 2>/dev/null || echo "tests did not run"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
