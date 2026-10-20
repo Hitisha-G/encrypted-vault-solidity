@@ -40,7 +40,7 @@ See [docs/design.md](docs/design.md) for the contract surface, invariants, and t
 
 ## Status
 
-Early scaffold. Contracts and tests land incrementally.
+`PlainVault` (the plaintext reference vault) is in `src/`. Its Foundry tests and the FHE-backed `EncryptedVault` land next.
 
 ## License
 
