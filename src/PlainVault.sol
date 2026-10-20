@@ -55,13 +55,7 @@ contract PlainVault {
 
     /// @notice Debit `amount` from the caller and send it as ETH.
     function withdraw(uint256 amount) external nonReentrant {
-        if (amount == 0) revert ZeroAmount();
-        uint256 balance = _balances[msg.sender];
-        if (amount > balance) revert InsufficientBalance(balance, amount);
-
-        unchecked {
-            _balances[msg.sender] = balance - amount;
-        }
+        _debit(msg.sender, amount);
         emit Withdrawn(msg.sender, amount);
 
         // Balance is already debited and nonReentrant blocks re-entry, so the guard
@@ -74,13 +68,7 @@ contract PlainVault {
     /// @notice Move `amount` to `to` inside the vault. No ETH leaves the contract.
     function transfer(address to, uint256 amount) external {
         if (to == address(0)) revert ZeroAddress();
-        if (amount == 0) revert ZeroAmount();
-        uint256 balance = _balances[msg.sender];
-        if (amount > balance) revert InsufficientBalance(balance, amount);
-
-        unchecked {
-            _balances[msg.sender] = balance - amount;
-        }
+        _debit(msg.sender, amount);
         _balances[to] += amount;
         emit Transferred(msg.sender, to, amount);
     }
@@ -94,5 +82,17 @@ contract PlainVault {
     /// @notice Plaintext balance of `user`.
     function balanceOf(address user) external view returns (uint256) {
         return _balances[user];
+    }
+
+    /// @dev Shared debit path for withdraw and transfer: rejects zero amounts and overdrafts,
+    ///      then lowers the balance. Keeps the overdraft check in one place for the FHE port.
+    function _debit(address from, uint256 amount) private {
+        if (amount == 0) revert ZeroAmount();
+        uint256 balance = _balances[from];
+        if (amount > balance) revert InsufficientBalance(balance, amount);
+
+        unchecked {
+            _balances[from] = balance - amount;
+        }
     }
 }
