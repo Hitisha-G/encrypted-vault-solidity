@@ -1,0 +1,8 @@
+# Normalise line endings so forge fmt --check behaves the same on every OS.
+* text=auto eol=lf
+
+# Show Solidity diffs with function context and count it in language stats.
+*.sol linguist-language=Solidity diff=solidity
+
+# Vendored Foundry libraries should not skew language stats or diffs.
+lib/** linguist-vendored

@@ -7,6 +7,9 @@ VERBOSITY ?= -vv
 # Profile used by every target that mirrors a CI job (fuzz runs, deny warnings).
 CI_PROFILE ?= ci
 
+# Plain `make` lists targets; pin it so reordering targets never makes it run fmt.
+.DEFAULT_GOAL := help
+
 .PHONY: help fmt fmt-check build test gas sizes clean lint-ci ci-local
 
 help: ## List available targets
